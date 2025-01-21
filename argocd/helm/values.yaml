@@ -1,0 +1,93 @@
+argo-cd:
+  global:
+    image:
+      repository: quay.io/argoproj/argocd
+      tag: ""
+      imagePullPolicy: IfNotPresent
+    domain: argocd.example.com
+
+  configs:
+    cm:
+      timeout.reconciliation: 180s
+    params:
+      server.insecure: true
+      reposerver.enable.git.submodule: false
+    secret:
+      argocdServerAdminPassword: "admin"
+
+  controller:
+    name: application-controller
+    replicas: 1
+    logFormat: json
+    logLevel: info
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+
+  redis:
+    enabled: true
+    name: redis
+    image:
+      imagePullPolicy: IfNotPresent
+    logFormat: json
+    logLevel: info
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi  
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+
+  server:
+    name: server
+    replicas: 1
+    ingress:
+      enabled: false
+      controller: generic
+    resources:
+      requests:
+        cpu: 150m
+        memory: 128Mi
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+
+
+  ## Repo Server
+  repoServer:
+    name: repo-server
+    replicas: 1
+    logFormat: json
+    logLevel: info
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+
+  notifications:
+    enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+
+  applicationSet:
+    enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 1000m
+        memory: 1024Mi

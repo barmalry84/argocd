@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  generation: 1
+  name: argocd
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      parameters:
+      - name: argo-cd.global.domain
+        value: devops5.test-danit.com
+      - name: argo-cd.configs.cm.url
+        value: "https://argocd.devops5.test-danit.com"
+      - name: argo-cd.redis.image.repository
+        value: redis
+      valueFiles:
+      - values.yaml
+    path: helm
+    repoURL: https://github.com/barmalry84/argocd.git
+    targetRevision: main
+  ignoreDifferences:
+  - group: ""
+    name: argocd-secret
+    jsonPointers:
+     - /data
+    kind: Secret
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true
