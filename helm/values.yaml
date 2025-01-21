@@ -13,7 +13,8 @@ argo-cd:
       server.insecure: true
       reposerver.enable.git.submodule: false
     secret:
-      argocdServerAdminPassword: "admin"
+      argocdServerAdminPassword: $2a$10$w4tar/D6pFN0prA7mfwgreV1Qc6AG8ernRswZlKgDQZnC8d.HKVPK
+      argocdServerAdminPasswordMtime: 2024-09-30T10:11:12Z
 
   controller:
     name: application-controller
