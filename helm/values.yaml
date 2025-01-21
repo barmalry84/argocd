@@ -12,8 +12,6 @@ argo-cd:
     params:
       server.insecure: true
       reposerver.enable.git.submodule: false
-    secret:
-      argocdServerAdminPassword: "$2a$10$rRyBsGSHK6.uc8fntPwVIuLVHgsAhAX7TcdrqW/RADU0uh7CaChLa"
 
   controller:
     name: application-controller
@@ -46,9 +44,18 @@ argo-cd:
   server:
     name: server
     replicas: 1
-    ingress:
-      enabled: false
-      controller: generic
+ingress:
+    enabled: true
+    controller: aws
+    ingressClassName: alb
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internal
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/backend-protocol: HTTP
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+      alb.ingress.kubernetes.io/ssl-redirect: '443'
+    aws:
+      serviceType: ClusterIP
     resources:
       requests:
         cpu: 150m
