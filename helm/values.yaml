@@ -44,7 +44,7 @@ argo-cd:
   server:
     name: server
     replicas: 1
-ingress:
+  ingress:
     enabled: true
     controller: aws
     ingressClassName: alb
@@ -63,7 +63,6 @@ ingress:
       limits:
         cpu: 1000m
         memory: 1024Mi
-
 
   ## Repo Server
   repoServer:
