@@ -49,7 +49,7 @@ argo-cd:
       controller: generic
     resources:
       requests:
-        cpu: 150m
+        cpu: 100m
         memory: 128Mi
       limits:
         cpu: 1000m
