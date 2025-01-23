@@ -44,18 +44,9 @@ argo-cd:
   server:
     name: server
     replicas: 1
-  ingress:
-    enabled: true
-    controller: aws
-    ingressClassName: alb
-    annotations:
-      alb.ingress.kubernetes.io/scheme: internal
-      alb.ingress.kubernetes.io/target-type: ip
-      alb.ingress.kubernetes.io/backend-protocol: HTTP
-      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
-      alb.ingress.kubernetes.io/ssl-redirect: '443'
-    aws:
-      serviceType: ClusterIP
+    ingress:
+      enabled: false
+      controller: generic
     resources:
       requests:
         cpu: 150m
@@ -63,6 +54,7 @@ argo-cd:
       limits:
         cpu: 1000m
         memory: 1024Mi
+
 
   ## Repo Server
   repoServer:
