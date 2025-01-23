@@ -1,0 +1,9 @@
+apiVersion: v2
+name: flask
+description: A Helm chart for flask
+version: 0.1.0
+appVersion: 0.1.0
+dependencies:
+- name: common-chart
+  version: 0.0.1
+  repository: oci://746669199028.dkr.ecr.eu-west-1.amazonaws.com

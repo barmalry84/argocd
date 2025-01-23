@@ -1,0 +1,49 @@
+deployment:
+  serviceAccountName: flask-service-account
+  namespaceOverride: flask
+  replicaCount: 2
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  envVars:
+    - name: FLASK_APP
+      value: "api.py"
+    - name: MYSQL_HOST
+      value: "mysql.mysql.svc.cluster.local"
+    - name: MYSQL_PORT
+      value: "3306"
+  extraEnvVars:
+    envVarsSecret: mysql-secret
+  image:
+    image: public.ecr.aws/s0o7s4y3/flask-api
+    version: latest
+    pullPolicy: Always
+  containerPort:
+    name: flask
+    port: 5000
+  livenessProbe:
+    initialDelaySeconds: 20
+    timeoutSeconds: 2
+    httpGet:
+      path: /
+      port: 5000
+    periodSeconds: 10
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 20
+    timeoutSeconds: 2
+    httpGet:
+      path: /
+      port: 5000
+    periodSeconds: 10
+    failureThreshold: 6
+    successThreshold: 1
+service:
+  namespaceOverride: flask
+  ports:
+    name: flask
+    port: 80
+    targetPort: 5000

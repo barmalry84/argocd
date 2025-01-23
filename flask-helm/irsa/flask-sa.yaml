@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: flask-service-account
+  namespace: flask
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::746669199028:role/flask-role

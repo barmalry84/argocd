@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::746669199028:oidc-provider/oidc.eks.eu-west-1.amazonaws.com/id/F9414867ADD6DFECF785D23A89CCA60E"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.eu-west-1.amazonaws.com/id/F9414867ADD6DFECF785D23A89CCA60E:aud": "sts.amazonaws.com",
+          "oidc.eks.eu-west-1.amazonaws.com/id/F9414867ADD6DFECF785D23A89CCA60E:sub": "system:serviceaccount:flask:flask-service-account"
+        }
+      }
+    }
+  ]
+}
